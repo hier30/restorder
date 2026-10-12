@@ -54,6 +54,15 @@
                                    class="btn btn-sm btn-outline-info" title="Detail">
                                     <i class="bi bi-eye"></i>
                                 </a>
+                                <?php if ($p['status_pesanan'] === 'pending'): ?>
+                                    <form method="POST" action="?page=pesanan&action=proses" class="d-inline"
+                                          onsubmit="return confirm('Mulai proses pesanan ini?')">
+                                        <input type="hidden" name="id" value="<?= $p['id'] ?>">
+                                        <button type="submit" class="btn btn-sm btn-outline-primary" title="Proses">
+                                            <i class="bi bi-play-circle"></i>
+                                        </button>
+                                    </form>
+                                <?php endif; ?>
                                 <?php if (in_array($p['status_pesanan'], ['pending', 'diproses'])): ?>
                                     <a href="?page=pesanan&action=selesai&id=<?= $p['id'] ?>"
                                        class="btn btn-sm btn-outline-success" title="Selesaikan"
@@ -66,11 +75,13 @@
                                         <i class="bi bi-x-circle"></i>
                                     </a>
                                 <?php endif; ?>
-                                <a href="?page=pesanan&action=delete&id=<?= $p['id'] ?>"
-                                   class="btn btn-sm btn-outline-danger" title="Hapus"
-                                   onclick="return confirm('Yakin hapus pesanan ini?')">
-                                    <i class="bi bi-trash"></i>
-                                </a>
+                                <form method="POST" action="?page=pesanan&action=delete" class="d-inline"
+                                      onsubmit="return confirm('Yakin hapus pesanan ini?')">
+                                    <input type="hidden" name="id" value="<?= $p['id'] ?>">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         <?php endforeach; ?>

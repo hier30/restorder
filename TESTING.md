@@ -31,6 +31,9 @@ vendor/bin/phpunit
 | 20 | ValidasiServiceTest | testValidasiPesananDineInTanpaMeja | Dine-in tanpa meja → exception |
 | 21 | ValidasiServiceTest | testValidasiPesananTanpaItem | Pesanan tanpa item → exception |
 | 22 | ValidasiServiceTest | testValidasiPesananTakeAwayValid | Take-away tanpa meja → valid |
+| 23 | PesananServiceTest | testProsesPesananPendingBerhasil | Pesanan pending → diproses |
+| 24 | PesananServiceTest | testProsesPesananTidakDitemukan | Edge: ID tidak ada → exception, status tidak berubah |
+| 25-27 | PesananServiceTest | testProsesPesananStatusSelainPendingDitolak | Edge: status diproses/selesai/dibatalkan → ditolak |
 
 ---
 
@@ -86,6 +89,7 @@ Isi kolom **Hasil** dengan "OK" atau deskripsi error setelah Anda menjalankan pe
 | 3 | Hitung subtotal otomatis | Pilih menu dan ubah jumlah di form | Subtotal, biaya layanan, dan total berubah real-time | |
 | 4 | Tambah/hapus item | Klik "Tambah Item", pilih menu; klik ikon hapus pada item | Item ditambah/dihapus dari form | |
 | 5 | Lihat detail pesanan | Klik ikon mata di daftar pesanan | Tampil info pesanan + rincian item + total | |
+| 5a | Proses pesanan | Klik ikon play biru pada pesanan berstatus Pending → OK | Status jadi "Diproses"; ikon play hilang, tombol Selesaikan/Batalkan tetap ada | |
 | 6 | Selesaikan pesanan | Klik centang hijau di pesanan pending | Status jadi "Selesai", meja kembali tersedia | |
 | 7 | Batalkan pesanan | Klik X kuning di pesanan pending | Status jadi "Dibatalkan" | |
 | 8 | Pesanan tanpa item | Buat pesanan tanpa memilih menu → Submit | Pesan error "Minimal harus ada 1 item" | |

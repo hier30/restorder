@@ -115,6 +115,21 @@ class PesananController extends BaseController
         ]);
     }
 
+    public function proses(): void
+    {
+        $id = $this->ambilIdPost('?page=pesanan');
+        try {
+            $this->pesananService->prosesPesanan($id);
+            $this->setFlash("Pesanan #{$id} sedang diproses.");
+        } catch (InvalidArgumentException $e) {
+            $this->setFlash($e->getMessage(), 'danger');
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            $this->setFlash('Gagal memproses pesanan.', 'danger');
+        }
+        $this->redirect('?page=pesanan');
+    }
+
     public function selesai(): void
     {
         $id = (int) ($_GET['id'] ?? 0);
@@ -141,7 +156,7 @@ class PesananController extends BaseController
 
     public function delete(): void
     {
-        $id = (int) ($_GET['id'] ?? 0);
+        $id = $this->ambilIdPost('?page=pesanan');
         try {
             $this->pesananRepo->delete($id);
             $this->setFlash("Pesanan #{$id} berhasil dihapus.");

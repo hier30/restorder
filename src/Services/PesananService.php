@@ -137,6 +137,33 @@ class PesananService
     }
 
     /**
+     * Ubah status pesanan dari 'pending' menjadi 'diproses' (mulai dimasak).
+     *
+     * Hanya pesanan berstatus 'pending' yang boleh diproses, supaya pesanan
+     * yang sudah selesai atau dibatalkan tidak "hidup" kembali.
+     *
+     * @param int $id ID pesanan
+     * @return bool true jika berhasil
+     * @throws InvalidArgumentException Jika pesanan tidak ditemukan atau statusnya bukan 'pending'
+     * @throws PDOException Jika operasi database gagal
+     */
+    public function prosesPesanan(int $id): bool
+    {
+        $pesanan = $this->pesananRepo->findById($id);
+        if ($pesanan === null) {
+            throw new InvalidArgumentException("Pesanan dengan ID {$id} tidak ditemukan.");
+        }
+
+        if ($pesanan['status_pesanan'] !== 'pending') {
+            throw new InvalidArgumentException(
+                "Pesanan #{$id} tidak bisa diproses karena statusnya '{$pesanan['status_pesanan']}'."
+            );
+        }
+
+        return $this->pesananRepo->updateStatus($id, 'diproses');
+    }
+
+    /**
      * Selesaikan pesanan (update status dan bebaskan meja jika dine-in).
      *
      * @param int $id ID pesanan
