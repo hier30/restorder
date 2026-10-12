@@ -35,11 +35,13 @@
                                    class="btn btn-sm btn-outline-primary" title="Edit">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <a href="?page=pelanggan&action=delete&id=<?= $p->getId() ?>"
-                                   class="btn btn-sm btn-outline-danger" title="Hapus"
-                                   onclick="return confirm('Yakin hapus pelanggan ini?')">
-                                    <i class="bi bi-trash"></i>
-                                </a>
+                                <form method="POST" action="?page=pelanggan&action=delete" class="d-inline"
+                                      onsubmit="return confirm('Yakin hapus pelanggan ini?')">
+                                    <input type="hidden" name="id" value="<?= $p->getId() ?>">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         <?php endforeach; ?>

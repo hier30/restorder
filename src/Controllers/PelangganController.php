@@ -107,7 +107,7 @@ class PelangganController extends BaseController
 
     public function delete(): void
     {
-        $id = (int) ($_GET['id'] ?? 0);
+        $id = $this->ambilIdPost('?page=pelanggan');
         try {
             $this->repo->delete($id);
             $this->setFlash('Pelanggan berhasil dihapus.');

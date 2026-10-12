@@ -101,7 +101,7 @@ class MejaController extends BaseController
 
     public function delete(): void
     {
-        $id = (int) ($_GET['id'] ?? 0);
+        $id = $this->ambilIdPost('?page=meja');
         try {
             $this->repo->delete($id);
             $this->setFlash('Meja berhasil dihapus.');

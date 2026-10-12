@@ -51,11 +51,13 @@
                                    class="btn btn-sm btn-outline-primary" title="Edit">
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <a href="?page=menu&action=delete&id=<?= $m->getId() ?>"
-                                   class="btn btn-sm btn-outline-danger" title="Hapus"
-                                   onclick="return confirm('Yakin hapus menu ini?')">
-                                    <i class="bi bi-trash"></i>
-                                </a>
+                                <form method="POST" action="?page=menu&action=delete" class="d-inline"
+                                      onsubmit="return confirm('Yakin hapus menu ini?')">
+                                    <input type="hidden" name="id" value="<?= $m->getId() ?>">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                         <?php endforeach; ?>

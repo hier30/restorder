@@ -107,7 +107,7 @@ class MenuController extends BaseController
 
     public function delete(): void
     {
-        $id = (int) ($_GET['id'] ?? 0);
+        $id = $this->ambilIdPost('?page=menu');
         try {
             $this->repo->delete($id);
             $this->setFlash('Menu berhasil dihapus.');

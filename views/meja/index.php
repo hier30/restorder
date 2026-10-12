@@ -41,11 +41,13 @@
                        class="btn btn-sm btn-outline-primary" title="Edit">
                         <i class="bi bi-pencil"></i>
                     </a>
-                    <a href="?page=meja&action=delete&id=<?= $meja->getId() ?>"
-                       class="btn btn-sm btn-outline-danger" title="Hapus"
-                       onclick="return confirm('Yakin hapus meja ini?')">
-                        <i class="bi bi-trash"></i>
-                    </a>
+                    <form method="POST" action="?page=meja&action=delete" class="d-inline"
+                          onsubmit="return confirm('Yakin hapus meja ini?')">
+                        <input type="hidden" name="id" value="<?= $meja->getId() ?>">
+                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

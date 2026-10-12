@@ -63,6 +63,25 @@ class BaseController
     }
 
     /**
+     * Ambil ID dari request POST untuk aksi yang mengubah data (misal hapus).
+     *
+     * Request selain POST (misal membuka URL langsung lewat GET) ditolak
+     * dan di-redirect, agar data tidak berubah hanya karena membuka link.
+     *
+     * @param string $kembaliKe URL tujuan redirect jika request bukan POST
+     * @return int ID dari $_POST['id'] (0 jika tidak ada)
+     */
+    protected function ambilIdPost(string $kembaliKe): int
+    {
+        if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+            $this->setFlash('Aksi ini hanya bisa dilakukan lewat tombol (metode POST).', 'danger');
+            $this->redirect($kembaliKe);
+        }
+
+        return (int) ($_POST['id'] ?? 0);
+    }
+
+    /**
      * Redirect ke URL lain.
      *
      * @param string $url
