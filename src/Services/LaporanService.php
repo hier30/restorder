@@ -118,20 +118,23 @@ class LaporanService
         } elseif ($tanggalAkhir) {
             $periodeText = "Sampai {$tanggalAkhir}";
         }
+        // Tanggal berasal dari query string (input user), jadi harus di-escape
+        $periodeText = htmlspecialchars($periodeText);
 
         $rows = '';
         $no = 1;
         foreach ($pesanan as $p) {
             $tipe = $p['tipe_pesanan'] === 'dine_in' ? 'Dine In' : 'Take Away';
-            $meja = $p['nomor_meja'] ?? '-';
-            $status = ucfirst($p['status_pesanan']);
+            $meja = htmlspecialchars($p['nomor_meja'] ?? '-');
+            $status = htmlspecialchars(ucfirst($p['status_pesanan']));
+            $namaPelanggan = htmlspecialchars($p['nama_pelanggan'] ?? '-');
             $total = number_format((float) $p['total'], 0, ',', '.');
             $tanggal = date('d/m/Y H:i', strtotime($p['tanggal_pesanan']));
 
             $rows .= "<tr>
                 <td style='text-align:center'>{$no}</td>
                 <td>{$tanggal}</td>
-                <td>{$p['nama_pelanggan']}</td>
+                <td>{$namaPelanggan}</td>
                 <td style='text-align:center'>{$tipe}</td>
                 <td style='text-align:center'>{$meja}</td>
                 <td style='text-align:center'>{$status}</td>
@@ -145,7 +148,7 @@ class LaporanService
         }
 
         $totalPendapatan = number_format((float) $ringkasan['total_pendapatan'], 0, ',', '.');
-        $jumlahPesanan   = $ringkasan['jumlah_pesanan'];
+        $jumlahPesanan   = (int) $ringkasan['jumlah_pesanan'];
 
         return <<<HTML
         <!DOCTYPE html>
